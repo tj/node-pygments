@@ -4,7 +4,7 @@
  */
 
 var spawn = require('child_process').spawn
-  , debug = require('debug')('cloudup:highlight');
+  , debug = require('debug')('pygments');
 
 /**
  * Highlight the given code `str` as `lang`
