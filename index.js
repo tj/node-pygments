@@ -22,7 +22,7 @@ module.exports = function(str, lang, fn){
   var proc = spawn('pygmentize', ['-l', lang, '-f', 'html', '-O', 'encoding=utf8,linenos=true']);
   proc.stdout.setEncoding('utf8');
   proc.stdout.on('data', function(s){ buf += s });
-  proc.on('exit', function(){ fn(null, buf) });
+  proc.on('close', function(){ fn(null, buf) });
   proc.stdin.write(str);
   proc.stdin.end();
 };
