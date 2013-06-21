@@ -17,9 +17,16 @@ var spawn = require('child_process').spawn
  */
 
 module.exports = function(str, lang, fn){
+  var args = ['-l', lang, '-f', 'html', '-O', 'encoding=utf8,linenos=true'];
   var buf = '';
+
+  if ('function' == typeof lang) {
+    fn = lang;
+    args = ['-g', '-f', 'html', '-O', 'encoding=utf8,linenos=true'];
+  }
+
   debug('highlight %s', lang);
-  var proc = spawn('pygmentize', ['-l', lang, '-f', 'html', '-O', 'encoding=utf8,linenos=true']);
+  var proc = spawn('pygmentize', args);
   proc.stdout.setEncoding('utf8');
   proc.stdout.on('data', function(s){ buf += s });
   proc.on('close', function(){ fn(null, buf) });
